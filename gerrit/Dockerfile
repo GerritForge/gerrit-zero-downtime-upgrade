@@ -1,8 +1,8 @@
-FROM gerritcodereview/gerrit:3.5.4
+FROM gerritcodereview/gerrit:3.6.3
 
-ENV GERRIT_BRANCH=stable-3.5
+ENV GERRIT_BRANCH=stable-3.6
 
-ENV GERRIT_CI_URL=https://archive-ci.gerritforge.com/job
+ENV GERRIT_CI_URL=https://gerrit-ci.gerritforge.com/job
 
 USER root
 
@@ -13,7 +13,7 @@ USER gerrit
 ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-javamelody-bazel-master-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/javamelody/javamelody.jar /var/gerrit/plugins/
 ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-high-availability-bazel-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/high-availability/high-availability.jar /var/gerrit/plugins/
 ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-healthcheck-bazel-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/healthcheck/healthcheck.jar /var/gerrit/plugins/
-ADD --chown=gerrit:gerrit https://repo1.maven.org/maven2/com/gerritforge/global-refdb/3.5.6/global-refdb-3.5.6.jar /var/gerrit/lib/
+ADD --chown=gerrit:gerrit https://repo1.maven.org/maven2/com/gerritforge/global-refdb/3.6.6/global-refdb-3.6.6.jar /var/gerrit/lib/
 
 USER root
 
