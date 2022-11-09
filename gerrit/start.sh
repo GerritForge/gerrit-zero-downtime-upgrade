@@ -6,6 +6,7 @@ then
 fi
 
 sudo -u gerrit cp /var/gerrit/etc/gerrit.config.orig /var/gerrit/etc/gerrit.config
+git config -f /var/gerrit/etc/gerrit.config gerrit.serverId 5da66330-1860-4f08-a889-27664fe55d85
 sudo -u gerrit cp /var/gerrit/etc/high-availability.config.orig /var/gerrit/etc/high-availability.config
 
 if [[ ! -f /var/gerrit/etc/ssh_host_ed25519_key ]]

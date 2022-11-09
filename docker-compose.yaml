@@ -20,6 +20,54 @@ services:
     environment:
       - HOSTNAME=localhost
 
+  gerrit-01-upgrade:
+    build: gerrit
+    networks:
+      - gerrit-net
+    volumes:
+      - /dev/urandom:/dev/random
+      - gitvolume:/var/gerrit/git
+      - indexvolume-01:/var/gerrit/index
+      - shareddir:/var/gerrit/shareddir
+      - ./etc/gerrit.config:/var/gerrit/etc/gerrit.config.orig
+      - ./etc/high-availability.gerrit-01.config:/var/gerrit/etc/high-availability.config.orig
+      - ./etc/healthcheck.config:/var/gerrit/etc/healthcheck.config
+    environment:
+      - HOSTNAME=localhost
+    entrypoint: sudo -u gerrit java -jar /var/gerrit/bin/gerrit.war init --batch -d /var/gerrit
+
+  gerrit-01-reindex:
+    build: gerrit
+    networks:
+      - gerrit-net
+    volumes:
+      - /dev/urandom:/dev/random
+      - gitvolume:/var/gerrit/git
+      - indexvolume-01:/var/gerrit/index
+      - shareddir:/var/gerrit/shareddir
+      - ./etc/gerrit.config:/var/gerrit/etc/gerrit.config.orig
+      - ./etc/high-availability.gerrit-01.config:/var/gerrit/etc/high-availability.config.orig
+      - ./etc/healthcheck.config:/var/gerrit/etc/healthcheck.config
+    environment:
+      - HOSTNAME=localhost
+    entrypoint: sudo -u gerrit java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
+
+  gerrit-02-reindex:
+    build: gerrit
+    networks:
+      - gerrit-net
+    volumes:
+      - /dev/urandom:/dev/random
+      - gitvolume:/var/gerrit/git
+      - indexvolume-02:/var/gerrit/index
+      - shareddir:/var/gerrit/shareddir
+      - ./etc/gerrit.config:/var/gerrit/etc/gerrit.config.orig
+      - ./etc/high-availability.gerrit-01.config:/var/gerrit/etc/high-availability.config.orig
+      - ./etc/healthcheck.config:/var/gerrit/etc/healthcheck.config
+    environment:
+      - HOSTNAME=localhost
+    entrypoint: sudo -u gerrit java -jar /var/gerrit/bin/gerrit.war reindex -d /var/gerrit
+
   gerrit-02:
     build: gerrit
     ports:
