@@ -1,18 +1,18 @@
-FROM gerritcodereview/gerrit:3.7.5
+FROM gerritcodereview/gerrit:3.8.2
 
-ENV GERRIT_BRANCH=stable-3.7
+ENV GERRIT_BRANCH=stable-3.8
 
 ENV GERRIT_CI_URL=https://gerrit-ci.gerritforge.com/job
 
 USER root
 
-RUN yum install -y iputils nmap curl lsof gettext net-tools sudo
+RUN yum install -y iputils nmap lsof gettext net-tools sudo
 
 USER gerrit
 
 ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-javamelody-bazel-master-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/javamelody/javamelody.jar /var/gerrit/plugins/
 ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-high-availability-bazel-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/high-availability/high-availability.jar /var/gerrit/plugins/
-ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-healthcheck-bazel-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/healthcheck/healthcheck.jar /var/gerrit/plugins/
+ADD --chown=gerrit:gerrit $GERRIT_CI_URL/plugin-healthcheck-bazel-master-$GERRIT_BRANCH/lastSuccessfulBuild/artifact/bazel-bin/plugins/healthcheck/healthcheck.jar /var/gerrit/plugins/
 ADD --chown=gerrit:gerrit https://repo1.maven.org/maven2/com/gerritforge/global-refdb/3.6.6/global-refdb-3.6.6.jar /var/gerrit/lib/
 
 USER root
